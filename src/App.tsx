@@ -24,17 +24,23 @@ function App() {
   const [name, setName] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Here you would integrate with your backend/email service
-    console.log('Waitlist signup:', { name, email });
-    setIsSubmitted(true);
-    setName('');
-    setEmail('');
-    
-    // Reset success message after 3 seconds
-    setTimeout(() => setIsSubmitted(false), 3000);
-  };
+  const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault()
+  const { error } = await supabase
+    .from('waitlist')
+    .insert({ name, email })
+
+  if (error) {
+    console.error(error)
+    alert('Could not save. Try again.')
+    return
+  }
+
+  setIsSubmitted(true)
+  setName('')
+  setEmail('')
+  setTimeout(() => setIsSubmitted(false), 3000)
+};
 
   return (
     <div className="min-h-screen bg-gray-900 text-white overflow-x-hidden">
