@@ -77,7 +77,7 @@ function App() {
           </h2>
           <p className="text-lg sm:text-xl text-gray-300 mb-8 max-w-2xl mx-auto leading-relaxed">
             Revolutionary fleet management, real-time transit intelligence, and data-driven insights
-            to transform how Barbados moves.
+            to transform Barbados' public transit network.
           </p>
 
           {/* Waitlist Form */}
