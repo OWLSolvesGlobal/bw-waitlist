@@ -1,23 +1,27 @@
 import React, { useState } from 'react';
-import { 
-  ArrowRight, 
-  Users, 
-  MapPin, 
-  BarChart3, 
-  CheckCircle, 
+import {
+  ArrowRight,
+  Users,
+  MapPin,
+  BarChart3,
+  CheckCircle,
   Mail,
-  Phone,
   Globe,
   Zap,
   Shield,
   TrendingUp
 } from 'lucide-react';
-import { createClient } from '@supabase/supabase-js'
+import { createClient } from '@supabase/supabase-js';
 
+// ── Supabase client -----------------------------------------
 const supabase = createClient(
   import.meta.env.VITE_SUPABASE_URL,
   import.meta.env.VITE_SUPABASE_ANON_KEY
-)
+);
+
+// ── Resolve the logo so Vite bundles it ----------------------
+// Adjust the path if you put 3.png somewhere else under /src
+const logoSrc = new URL('./assets/3.png', import.meta.url).href;
 
 function App() {
   const [email, setEmail] = useState('');
@@ -25,22 +29,22 @@ function App() {
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault()
-  const { error } = await supabase
-    .from('waitlist')
-    .insert({ name, email })
+    e.preventDefault();
+    const { error } = await supabase
+      .from('waitlist')
+      .insert({ name, email });
 
-  if (error) {
-    console.error(error)
-    alert('Could not save. Try again.')
-    return
-  }
+    if (error) {
+      console.error(error);
+      alert('Could not save. Try again.');
+      return;
+    }
 
-  setIsSubmitted(true)
-  setName('')
-  setEmail('')
-  setTimeout(() => setIsSubmitted(false), 3000)
-};
+    setIsSubmitted(true);
+    setName('');
+    setEmail('');
+    setTimeout(() => setIsSubmitted(false), 3000);
+  };
 
   return (
     <div className="min-h-screen bg-gray-900 text-white overflow-x-hidden">
@@ -48,22 +52,22 @@ function App() {
       <section className="relative min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8">
         {/* Background Elements */}
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl"></div>
-          <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-yellow-400/10 rounded-full blur-3xl"></div>
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-blue-500/5 to-yellow-400/5 rounded-full blur-3xl"></div>
+          <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl" />
+          <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-yellow-400/10 rounded-full blur-3xl" />
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-blue-500/5 to-yellow-400/5 rounded-full blur-3xl" />
         </div>
 
         <div className="relative z-10 max-w-4xl mx-auto text-center">
-          {/* Logo/Brand */}
+          {/* Logo */}
           <div className="mb-8">
-            <img 
-              src="public/3.png" 
-              alt="BajanWheels Logo" 
+            <img
+              src={logoSrc}
+              alt="BajanWheels Logo"
               className="h-16 sm:h-20 lg:h-24 mx-auto mb-4"
             />
           </div>
 
-          {/* Main Headline */}
+          {/* Headline */}
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight mb-6">
             The Future of{' '}
             <span className="bg-gradient-to-r from-blue-400 to-yellow-400 bg-clip-text text-transparent">
@@ -71,16 +75,18 @@ function App() {
             </span>{' '}
             is Here
           </h2>
-
           <p className="text-lg sm:text-xl text-gray-300 mb-8 max-w-2xl mx-auto leading-relaxed">
-            Revolutionary fleet management, real-time transit intelligence, and data-driven insights 
+            Revolutionary fleet management, real-time transit intelligence, and data-driven insights
             to transform how Barbados moves.
           </p>
 
           {/* Waitlist Form */}
           <div className="max-w-md mx-auto mb-12">
             {!isSubmitted ? (
-              <form onSubmit={handleSubmit} className="bg-gray-800/50 backdrop-blur-sm p-6 rounded-2xl border border-gray-700/50">
+              <form
+                onSubmit={handleSubmit}
+                className="bg-gray-800/50 backdrop-blur-sm p-6 rounded-2xl border border-gray-700/50"
+              >
                 <h3 className="text-xl font-semibold mb-4 text-blue-400">Join the Waitlist</h3>
                 <div className="space-y-4">
                   <input
@@ -120,7 +126,7 @@ function App() {
           {/* Scroll Indicator */}
           <div className="animate-bounce">
             <div className="w-6 h-10 border-2 border-gray-600 rounded-full mx-auto">
-              <div className="w-1 h-3 bg-blue-400 rounded-full mx-auto mt-2"></div>
+              <div className="w-1 h-3 bg-blue-400 rounded-full mx-auto mt-2" />
             </div>
           </div>
         </div>
@@ -142,15 +148,14 @@ function App() {
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
-            {/* Fleet Management */}
-            <div className="group bg-gray-800/30 backdrop-blur-sm p-8 rounded-2xl border border-gray-700/50 hover:border-blue-500/50 transition-all duration-300 hover:transform hover:-translate-y-2">
-              <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+            <div className="group bg-gray-800/30 backdrop-blur-sm p-8 rounded-2xl border border-gray-700/50 hover:border-blue-500/50 transition-all duration-300 hover:-translate-y-2">
+              <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                 <Users className="w-6 h-6 text-white" />
               </div>
               <h3 className="text-xl font-bold mb-4 text-blue-400">Fleet Management</h3>
               <p className="text-gray-300 leading-relaxed mb-6">
-                Empower van owners with intelligent route optimization, real-time tracking, 
-                and automated scheduling to maximize efficiency and passenger satisfaction.
+                Empower van owners with intelligent route optimization, real-time tracking, and automated
+                scheduling to maximize efficiency and passenger satisfaction.
               </p>
               <div className="flex items-center text-sm text-blue-400 font-semibold">
                 <Zap className="w-4 h-4 mr-2" />
@@ -158,15 +163,14 @@ function App() {
               </div>
             </div>
 
-            {/* Rider Information */}
-            <div className="group bg-gray-800/30 backdrop-blur-sm p-8 rounded-2xl border border-gray-700/50 hover:border-yellow-400/50 transition-all duration-300 hover:transform hover:-translate-y-2">
-              <div className="w-12 h-12 bg-gradient-to-r from-yellow-400 to-yellow-500 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+            <div className="group bg-gray-800/30 backdrop-blur-sm p-8 rounded-2xl border border-gray-700/50 hover:border-yellow-400/50 transition-all duration-300 hover:-translate-y-2">
+              <div className="w-12 h-12 bg-gradient-to-r from-yellow-400 to-yellow-500 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                 <MapPin className="w-6 h-6 text-gray-900" />
               </div>
               <h3 className="text-xl font-bold mb-4 text-yellow-400">Transit Intelligence</h3>
               <p className="text-gray-300 leading-relaxed mb-6">
-                Keep passengers informed with live arrival times, route updates, and service 
-                notifications through our comprehensive transit information system.
+                Keep passengers informed with live arrival times, route updates, and service notifications
+                through our comprehensive transit information system.
               </p>
               <div className="flex items-center text-sm text-yellow-400 font-semibold">
                 <Shield className="w-4 h-4 mr-2" />
@@ -174,15 +178,14 @@ function App() {
               </div>
             </div>
 
-            {/* Telematics Data */}
-            <div className="group bg-gray-800/30 backdrop-blur-sm p-8 rounded-2xl border border-gray-700/50 hover:border-blue-500/50 transition-all duration-300 hover:transform hover:-translate-y-2">
-              <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+            <div className="group bg-gray-800/30 backdrop-blur-sm p-8 rounded-2xl border border-gray-700/50 hover:border-blue-500/50 transition-all duration-300 hover:-translate-y-2">
+              <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                 <BarChart3 className="w-6 h-6 text-white" />
               </div>
               <h3 className="text-xl font-bold mb-4 text-blue-400">Data Intelligence</h3>
               <p className="text-gray-300 leading-relaxed mb-6">
-                Provide insurers and government agencies with actionable telematics insights 
-                to enable smarter policy decisions and improved urban mobility planning.
+                Provide insurers and government agencies with actionable telematics insights to enable
+                smarter policy decisions and improved urban mobility planning.
               </p>
               <div className="flex items-center text-sm text-blue-400 font-semibold">
                 <TrendingUp className="w-4 h-4 mr-2" />
@@ -203,9 +206,9 @@ function App() {
             </span>
           </h2>
           <p className="text-lg sm:text-xl text-gray-300 leading-relaxed mb-8">
-            Our mission is to revolutionize public transportation in Barbados through cutting-edge 
-            technology, creating a more efficient, reliable, and sustainable mobility ecosystem. 
-            We're building the foundation for smarter cities, starting right here at home.
+            Our mission is to revolutionize public transportation in Barbados through cutting-edge technology,
+            creating a more efficient, reliable, and sustainable mobility ecosystem. We're building the
+            foundation for smarter cities, starting right here at home.
           </p>
           <div className="flex flex-wrap justify-center gap-6 text-sm text-gray-400">
             <div className="flex items-center">
@@ -224,9 +227,9 @@ function App() {
         </div>
       </section>
 
-      {/* Final CTA Section */}
+      {/* Final CTA */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 relative">
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-yellow-400/10"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-yellow-400/10" />
         <div className="relative max-w-4xl mx-auto text-center">
           <h2 className="text-3xl sm:text-4xl font-bold mb-6">
             Ready to Shape the Future of{' '}
@@ -235,11 +238,11 @@ function App() {
             </span>
           </h2>
           <p className="text-lg sm:text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
-            Join our waitlist today and be among the first to experience the next generation 
-            of smart mobility solutions in Barbados.
+            Join our waitlist today and be among the first to experience the next generation of
+            smart mobility solutions in Barbados.
           </p>
           <button
-            onClick={() => document.querySelector('input[type="email"]')?.focus()}
+            onClick={() => document.querySelector<HTMLInputElement>('input[type="email"]')?.focus()}
             className="bg-gradient-to-r from-blue-500 to-yellow-400 hover:from-blue-600 hover:to-yellow-500 py-4 px-8 rounded-full font-bold text-lg transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
           >
             Join the Movement
@@ -253,20 +256,14 @@ function App() {
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="mb-4 md:mb-0">
               <div className="flex items-center space-x-3">
-                <img 
-                  src="public/3.png" 
-                  alt="BajanWheels Logo" 
-                  className="h-8 w-8"
-                />
+                <img src={logoSrc} alt="BajanWheels Logo" className="h-8 w-8" />
                 <h3 className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-yellow-400 bg-clip-text text-transparent">
                   BajanWheels
                 </h3>
               </div>
-              <p className="text-gray-400 text-sm mt-1">
-                Transforming Transportation in Barbados
-              </p>
+              <p className="text-gray-400 text-sm mt-1">Transforming Transportation in Barbados</p>
             </div>
-            
+
             <div className="flex space-x-6 text-gray-400">
               <div className="flex items-center text-sm">
                 <Mail className="w-4 h-4 mr-2" />
@@ -278,7 +275,7 @@ function App() {
               </div>
             </div>
           </div>
-          
+
           <div className="mt-8 pt-8 border-t border-gray-800 text-center text-gray-400 text-sm">
             <p>&copy; 2025 BajanWheels. All rights reserved. Built for the future of Caribbean mobility.</p>
           </div>
